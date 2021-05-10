@@ -7,32 +7,36 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ClientHandler {
-    private int lastMsgTime;
     private MyServer server;
     private  Socket socket;
     private  DataInputStream in;
     private  DataOutputStream out;
     private String name="";
 
+
+
     public ClientHandler( Socket socket) {
+
         try {
             this.server=MyServer.getServer();
             this.socket = socket;
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
-            new Thread(() ->{
+            MyServer.getExecutorService().submit(new Thread(()-> {
                 try {
                     auth();
                     readMsg();
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     closeConnection();
                 }
-
-            }).start();
+            }));
 
         } catch (IOException e) {
             System.out.println("Проблемы при создании обработчика клиента");

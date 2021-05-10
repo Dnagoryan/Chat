@@ -5,6 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MyServer {
     private static MyServer server;
@@ -14,10 +17,12 @@ public class MyServer {
     private final int PORT=8199;
     private  List<ClientHandler> clients;
     private AuthService authService;
+    private static ExecutorService executorService;
 
 
     public MyServer(){
         server=this;
+        executorService= Executors.newCachedThreadPool();
     try(ServerSocket serverSocket=new ServerSocket(PORT)) {
         authService=new BaseAuthService();
         authService.start();
@@ -36,6 +41,10 @@ public class MyServer {
             authService.stop();
         }
     }
+    }
+
+    public static ExecutorService getExecutorService() {
+        return executorService;
     }
 
 
