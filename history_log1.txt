@@ -1,0 +1,12 @@
+pass: asd
+pass: dfajk
+pass: asldkfj
+pass: alkjdfs
+pass: asdjkfa
+pass: aslkdcj
+Ник занят
+/clients  abracadabra
+abracadabra: asjkldf
+abracadabra: lskjdf
+abracadabra: kjl;xcv
+abracadabra: asdfjkl'
